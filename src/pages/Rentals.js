@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import logo from "../images/airbnbRed.png";
 import { ConnectButton, Icon, Button } from "web3uikit";
+import RentalsMap from "../components/RentalsMap";
 
 const Rentals = () => {
   const {state: searchFilters} = useLocation();
@@ -22,6 +23,11 @@ const Rentals = () => {
       },
     },
   ];
+
+  let cords = [];
+  rentalsList.forEach((e) => {
+    cords.push({ lat: e.attributes.lat, lng: e.attributes.long })
+  });
 
   return (
     <>
@@ -69,7 +75,7 @@ const Rentals = () => {
               <>
               <hr className="line2" />
               <div className="rentalDiv">
-                <img className="rentalImg" src={e.attributes.imgUrl}></img>
+                <img className="rentalImg" alt="map" src={e.attributes.imgUrl}></img>
                 <div className="rentalInfo">
                 <div className="rentalTitle">{e.attributes.name}</div>
                 <div className="rentalDesc">
@@ -94,9 +100,9 @@ const Rentals = () => {
           }
         </div>
         <div className="rentalsContentR">
+          <RentalsMap locations={cords}/>
         </div>
       </div>
-
     </>
   );
 };
